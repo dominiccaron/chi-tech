@@ -39,13 +39,12 @@ void LinearBoltzmann::Solver::InitAngleAggPolar(LBSGroupset& groupset)
     exit(EXIT_FAILURE);
   }
 
-  auto product_quadrature =
+  const auto product_quadrature =
     std::static_pointer_cast<chi_math::ProductQuadrature>(groupset.quadrature);
 
-  int d_azi   = std::max((int)(product_quadrature->azimu_ang.size()/4),1);
-  int num_azi = product_quadrature->azimu_ang.size();
-  int num_pol = product_quadrature->polar_ang.size();
-//  int pa = num_pol/2;
+  const auto num_pol = product_quadrature->GetDirectionMap().size();
+  const auto num_azi = product_quadrature->GetDirectionMap().at(0).size();
+  const auto d_azi   = std::max(num_azi/4, static_cast<size_t>(1));
 
   int num_angset_grps = 4; //Default Extruded and 2D
   if (options.geometry_type == GeometryType::ONED_SLAB)

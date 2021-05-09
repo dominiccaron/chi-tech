@@ -127,9 +127,9 @@ void LBSGroupset::BuildSubsets()
   ang_subset_sizes_bot.clear();
   if (quadrature->type == chi_math::AngularQuadratureType::ProductQuadrature)
   {
-    auto prodquadrature =
+    const auto prodquadrature =
       std::static_pointer_cast<chi_math::ProductQuadrature>(quadrature);
-    int num_pol_angls_hemi = (int)prodquadrature->polar_ang.size()/2;
+    const auto num_pol_angls_hemi = prodquadrature->GetDirectionMap().size()/2;
     int num_an_subsets = 1;
     if (master_num_ang_subsets <= num_pol_angls_hemi)
       num_an_subsets = master_num_ang_subsets;

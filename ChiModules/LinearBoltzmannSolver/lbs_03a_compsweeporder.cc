@@ -112,8 +112,8 @@ void LinearBoltzmann::Solver::ComputeSweepOrderingsAngleAggPolar(LBSGroupset& gr
       const auto product_quadrature =
         std::static_pointer_cast<chi_math::ProductQuadrature>(groupset.quadrature);
 
-      const auto num_azi = product_quadrature->azimu_ang.size();
-      const auto num_pol = product_quadrature->polar_ang.size();
+      const auto num_pol = product_quadrature->GetDirectionMap().size();
+      const auto num_azi = product_quadrature->GetDirectionMap().at(0).size();
 
       if (options.geometry_type == GeometryType::ONED_SLAB)
       {

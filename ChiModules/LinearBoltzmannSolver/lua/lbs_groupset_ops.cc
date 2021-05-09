@@ -336,7 +336,7 @@ int chiLBSGroupsetSetQuadrature(lua_State *L)
   }
   catch (const std::out_of_range& o)
   {
-    chi_log.Log(LOG_ALLERROR) << "Invalid handle to Product Quadrature"
+    chi_log.Log(LOG_ALLERROR) << "Invalid handle to Quadrature "
                    "in chiLBSGroupsetSetQuadrature. Handle provided: "
                    << prquad_index;
     exit(EXIT_FAILURE);
@@ -344,32 +344,11 @@ int chiLBSGroupsetSetQuadrature(lua_State *L)
 
   groupset->quadrature = ang_quad;
 
-  if (ang_quad->type == chi_math::AngularQuadratureType::ProductQuadrature)
-  {
-    auto prodquad = std::static_pointer_cast<chi_math::ProductQuadrature>(ang_quad);
-
-    chi_log.Log(LOG_0)
-      << "Groupset " << grpset_index
-      << " quadrature set to quadrature with "
-      << prodquad->azimu_ang.size()
-      << " azimuthal angles and "
-      << prodquad->polar_ang.size()
-      << " polar angles. ";
-  }
-  else if (ang_quad->type == chi_math::AngularQuadratureType::Arbitrary)
-  {
-    chi_log.Log(LOG_0)
-      << "Groupset " << grpset_index
-      << " quadrature set to quadrature with "
-      << ang_quad->abscissae.size()
-      << " number of angles.";
-  }
-  else
-    chi_log.Log(LOG_0)
-      << "Groupset " << grpset_index
-      << " quadrature set unknown quadrature type";
-
-
+  chi_log.Log(LOG_0)
+    << "Groupset " << grpset_index
+    << " quadrature set to quadrature with "
+    << ang_quad->abscissae.size()
+    << " number of angles.";
 
   return 0;
 }

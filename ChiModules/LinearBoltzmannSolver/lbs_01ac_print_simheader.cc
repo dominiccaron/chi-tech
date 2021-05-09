@@ -53,41 +53,27 @@ void LinearBoltzmann::Solver::PrintSimHeader()
 
       if (quad->type == chi_math::AngularQuadratureType::ProductQuadrature)
       {
-        auto product_quadrature =
+        const auto product_quadrature =
           std::static_pointer_cast<chi_math::ProductQuadrature>(quad);
 
-
-        chi_log.Log(LOG_0VERBOSE_1) << "Product Quadrature polar angles:\n";
+        chi_log.Log(LOG_0VERBOSE_1) << "Product Quadrature directions:\n";
         outstr = std::string("");
         counter = 0;
-        for (auto polar_angle : product_quadrature->polar_ang)
+        for (const auto& dir_set : product_quadrature->GetDirectionMap())
         {
-          snprintf(buf_pol,20,"%9.3f ",polar_angle);
+          snprintf(buf_pol, 20, "%9.3f : ", product_quadrature->abscissae[dir_set.second.front()].theta);
           outstr += std::string(buf_pol);
-          counter++;
-          if (counter == 6)
+          for (const auto& dir_idx : dir_set.second)
           {
-            counter = 0;
-            chi_log.Log(LOG_0VERBOSE_1) << outstr << "\n";
-            outstr = std::string("");
-          }
-        }
-        chi_log.Log(LOG_0VERBOSE_1) << outstr << "\n\n";
-
-
-        chi_log.Log(LOG_0VERBOSE_1) << "Product Quadrature azimuthal angles:\n";
-        outstr = std::string("");
-        counter = 0;
-        for (auto azimu_ang : product_quadrature->azimu_ang)
-        {
-          snprintf(buf_pol,20,"%9.3f ",azimu_ang);
-          outstr += std::string(buf_pol);
-          counter++;
-          if (counter == 6)
-          {
-            counter = 0;
-            chi_log.Log(LOG_0VERBOSE_1) << outstr << "\n";
-            outstr = std::string("");
+            snprintf(buf_pol, 20, "%9.3f ", product_quadrature->abscissae[dir_idx].phi);
+            outstr += std::string(buf_pol);
+            counter++;
+            if (counter == 6)
+            {
+              counter = 0;
+              chi_log.Log(LOG_0VERBOSE_1) << outstr << "\n";
+              outstr = std::string("");
+            }
           }
         }
         chi_log.Log(LOG_0VERBOSE_1) << outstr << "\n\n";
