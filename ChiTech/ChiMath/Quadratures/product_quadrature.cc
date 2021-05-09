@@ -16,11 +16,11 @@ void chi_math::ProductQuadrature::InitializeWithGL(int Np, bool verbose)
   chi_math::QuadratureGaussLegendre gl_polar(Np*2);
 
   //================================================= Create azimuthal angles
-  azimu_ang.clear();
+  std::vector<double> azimu_ang;
   azimu_ang.emplace_back(0.0);
 
   //================================================== Create polar angles
-  polar_ang.clear();
+  std::vector<double> polar_ang;
   for (unsigned int j = 0; j < (Np*2); ++j)
     polar_ang.emplace_back(M_PI-acos(gl_polar.qpoints[j][0]));
 
@@ -40,12 +40,12 @@ void chi_math::ProductQuadrature::InitializeWithGLL(int Na, int Np, bool verbose
   chi_math::QuadratureGaussLegendre gl_azimu(Na*4);
 
   //================================================= Create azimuthal angles
-  azimu_ang.clear();
+  std::vector<double> azimu_ang;
   for (unsigned int i = 0; i < (Na*4); ++i)
     azimu_ang.emplace_back(M_PI*gl_azimu.qpoints[i][0] + M_PI);
 
   //================================================== Create polar angles
-  polar_ang.clear();
+  std::vector<double> polar_ang;
   for (unsigned int j = 0; j < (Np*2); ++j)
     polar_ang.emplace_back(M_PI-acos(gl_polar.qpoints[j][0]));
 
@@ -68,12 +68,12 @@ void chi_math::ProductQuadrature::InitializeWithGLC(int Na, int Np, bool verbose
   chi_math::QuadratureGaussChebyshev gc_azimu(Na*4);
 
   //================================================= Create azimuthal angles
-  azimu_ang.clear();
+  std::vector<double> azimu_ang;
   for (unsigned int i = 0; i < (Na*4); ++i)
     azimu_ang.emplace_back(M_PI*(2*(i+1)-1)/(Na*4));
 
   //================================================== Create polar angles
-  polar_ang.clear();
+  std::vector<double> polar_ang;
   for (unsigned int j = 0; j < (Np*2); ++j)
     polar_ang.emplace_back(M_PI-acos(gl_polar.qpoints[j][0]));
 
@@ -107,8 +107,8 @@ void chi_math::ProductQuadrature::
     exit(EXIT_FAILURE);
   }
 
-  azimu_ang = azimuthal;
-  polar_ang = polar;
+  auto& azimu_ang = azimuthal;
+  auto& polar_ang = polar;
 
   if (verbose)
   {

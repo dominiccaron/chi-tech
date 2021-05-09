@@ -1,5 +1,5 @@
-#ifndef _product_quadrature_h
-#define _product_quadrature_h
+#ifndef PRODUCT_QUADRATURE_H
+#define PRODUCT_QUADRATURE_H
 
 #include <map>
 #include <vector>
@@ -25,9 +25,6 @@ namespace chi_math
 /** Class for product quadratures*/
 class chi_math::ProductQuadrature : public chi_math::AngularQuadrature
 {
-public:
-  std::vector<double>           polar_ang;
-  std::vector<double>           azimu_ang;
 protected:
   /** Linear indices of ordered directions mapped to polar level. */
   std::map<unsigned int, std::vector<unsigned int>> map_directions;
@@ -58,4 +55,4 @@ public:
   { return map_directions; }
 };
 
-#endif
+#endif // PRODUCT_QUADRATURE_H

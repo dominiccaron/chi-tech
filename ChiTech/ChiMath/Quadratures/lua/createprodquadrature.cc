@@ -75,16 +75,6 @@ int chiCreateProductQuadrature(lua_State *L)
     int index = (int)chi_math_handler.angular_quadratures.size() - 1;
     lua_pushnumber(L,index);
 
-    if (verbose)
-    {
-      chi_log.Log(LOG_0)
-        << "Created Gauss-Legendre Quadrature with "
-        << new_quad->azimu_ang.size()
-        << " azimuthal angles and "
-        << new_quad->polar_ang.size()
-        << " polar angles.";
-    }
-
     return 1;
   }
   else if (ident == (int)chi_math::ProductQuadratureType::GAUSS_LEGENDRE_LEGENDRE)
@@ -106,16 +96,6 @@ int chiCreateProductQuadrature(lua_State *L)
     int index = (int)chi_math_handler.angular_quadratures.size() - 1;
     lua_pushnumber(L,index);
 
-    if (verbose)
-    {
-      chi_log.Log(LOG_0)
-        << "Created Gauss-Legendre-Legendre Quadrature with "
-        << new_quad->azimu_ang.size()
-        << " azimuthal angles and "
-        << new_quad->polar_ang.size()
-        << " polar angles.";
-    }
-
     return 1;
   }
   else if (ident == (int)chi_math::ProductQuadratureType::GAUSS_LEGENDRE_CHEBYSHEV)
@@ -136,16 +116,6 @@ int chiCreateProductQuadrature(lua_State *L)
     chi_math_handler.angular_quadratures.push_back(new_quad);
     int index = (int)chi_math_handler.angular_quadratures.size() - 1;
     lua_pushnumber(L,index);
-
-    if (verbose)
-    {
-      chi_log.Log(LOG_0)
-      << "Created Gauss-Legendre-Chebyshev Quadrature with "
-      << new_quad->azimu_ang.size()
-      << " azimuthal angles and "
-      << new_quad->polar_ang.size()
-      << " polar angles.";
-    }
 
     return 1;
   }
@@ -218,16 +188,6 @@ int chiCreateProductQuadrature(lua_State *L)
     chi_math_handler.angular_quadratures.push_back(new_quad);
     int index = (int)chi_math_handler.angular_quadratures.size() - 1;
     lua_pushnumber(L,index);
-
-    if (verbose)
-    {
-      chi_log.Log(LOG_0)
-        << "Created Custom Quadrature with "
-        << new_quad->azimu_ang.size()
-        << " azimuthal angles and "
-        << new_quad->polar_ang.size()
-        << " polar angles.";
-    }
 
     return 1;
   }
