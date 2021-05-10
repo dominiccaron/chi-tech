@@ -1,5 +1,5 @@
-#ifndef _angular_quadrature_base_h
-#define _angular_quadrature_base_h
+#ifndef ANGULAR_QUADRATURE_BASE_H
+#define ANGULAR_QUADRATURE_BASE_H
 
 #include <vector>
 
@@ -90,4 +90,4 @@ public:
   GetMomentToHarmonicsIndexMap() const {return m_to_ell_em_map;}
 };
 
-#endif
+#endif // ANGULAR_QUADRATURE_BASE_H
