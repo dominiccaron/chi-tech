@@ -56,11 +56,11 @@ LBSCurvilinear::Solver::PerformInputChecks()
       //  options.geometry_type = LinearBoltzmann::GeometryType::ONED_CYLINDRICAL;
       //  break;
       //}
-      //case chi_math::CoordinateSystemType::SPHERICAL:
-      //{
-      //  options.geometry_type = LinearBoltzmann::GeometryType::ONED_SPHERICAL;
-      //  break;
-      //}
+        case chi_math::CoordinateSystemType::SPHERICAL:
+        {
+          options.geometry_type = LinearBoltzmann::GeometryType::ONED_SPHERICAL;
+          break;
+        }
         default:
         {
           chi_log.Log(LOG_ALLERROR)
