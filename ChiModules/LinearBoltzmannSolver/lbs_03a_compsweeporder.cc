@@ -38,10 +38,13 @@ void LinearBoltzmann::Solver::ComputeSweepOrderings(LBSGroupset& groupset) const
 
   const auto parmetis_partitioning = chi_mesh::VolumeMesher::PartitionType::PARMETIS;
 
-  bool no_cycles_parmetis_partitioning =
+  const bool no_cycles_parmetis_partitioning =
     (mesher->options.partition_type == parmetis_partitioning and
                                        (not groupset.allow_cycles));
-  bool is_1D_geometry = options.geometry_type == GeometryType::ONED_SLAB;
+  const bool is_1D_geometry =
+    (options.geometry_type == GeometryType::ONED_SLAB) ||
+    (options.geometry_type == GeometryType::ONED_CYLINDRICAL) ||
+    (options.geometry_type == GeometryType::ONED_SPHERICAL);
 
   //============================================= Check possibility of cycles
   if (no_cycles_parmetis_partitioning and not is_1D_geometry and chi_mpi.process_count>1)
@@ -105,17 +108,19 @@ void LinearBoltzmann::Solver::ComputeSweepOrderingsAngleAggPolar(LBSGroupset& gr
   if (options.geometry_type == GeometryType::ONED_SLAB ||
       options.geometry_type == GeometryType::TWOD_CARTESIAN ||
       (options.geometry_type == GeometryType::THREED_CARTESIAN &&
-       typeid(*mesher) == typeid(chi_mesh::VolumeMesherExtruder)))
+       typeid(*mesher) == typeid(chi_mesh::VolumeMesherExtruder)) ||
+      options.geometry_type == GeometryType::ONED_SPHERICAL)
   {
     if (groupset.quadrature->type == chi_math::AngularQuadratureType::ProductQuadrature)
     {
       const auto product_quadrature =
         std::static_pointer_cast<chi_math::ProductQuadrature>(groupset.quadrature);
 
-      const auto num_azi = product_quadrature->azimu_ang.size();
-      const auto num_pol = product_quadrature->polar_ang.size();
+      const auto num_pol = product_quadrature->GetDirectionMap().size();
+      const auto num_azi = product_quadrature->GetDirectionMap().at(0).size();
 
-      if (options.geometry_type == GeometryType::ONED_SLAB)
+      if (options.geometry_type == GeometryType::ONED_SLAB ||
+          options.geometry_type == GeometryType::ONED_SPHERICAL)
       {
         if (num_azi != 1)
         {
@@ -186,7 +191,7 @@ void LinearBoltzmann::Solver::ComputeSweepOrderingsAngleAggPolar(LBSGroupset& gr
       << "The simulation is not using \"LBSGroupset.ANGLE_AGG_SINGLE\", "
          "and therefore only certain geometry types are supported. i.e., "
          "GeometryType::ONED_SLAB, GeometryType::TWOD_CARTESIAN, "
-         "GeometryType::THREED_CARTESIAN.";
+         "GeometryType::THREED_CARTESIAN, GeometryType::ONED_SPHERICAL.";
     std::exit(EXIT_FAILURE);
   }
 }
@@ -198,7 +203,7 @@ void LinearBoltzmann::Solver::ComputeSweepOrderingsAngleAggAzimuthal(LBSGroupset
     << chi_program_timer.GetTimeString()
     << " Computing Sweep ordering - Angle aggregation: Azimuthal";
 
-  if (options.geometry_type == GeometryType::ONED_SPHERICAL ||
+  if (options.geometry_type == GeometryType::ONED_CYLINDRICAL ||
       options.geometry_type == GeometryType::TWOD_CYLINDRICAL)
   {
     if (groupset.quadrature->type == chi_math::AngularQuadratureType::ProductQuadrature)
@@ -231,7 +236,7 @@ void LinearBoltzmann::Solver::ComputeSweepOrderingsAngleAggAzimuthal(LBSGroupset
     chi_log.Log(LOG_ALLERROR)
       << "The simulation is not using \"LBSGroupset.ANGLE_AGG_SINGLE\", "
          "and therefore only certain geometry types are supported. i.e., "
-         "GeometryType::ONED_SPHERICAL, GeometryType::TWOD_CYLINDRICAL.";
+         "GeometryType::ONED_CYLINDRICAL, GeometryType::TWOD_CYLINDRICAL.";
     std::exit(EXIT_FAILURE);
   }
 }

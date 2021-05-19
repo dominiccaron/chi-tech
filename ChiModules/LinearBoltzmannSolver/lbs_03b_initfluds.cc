@@ -27,7 +27,8 @@ void LinearBoltzmann::Solver::InitFluxDataStructures(LBSGroupset& groupset)
 
   if ( options.geometry_type == GeometryType::ONED_SLAB or
        options.geometry_type == GeometryType::TWOD_CARTESIAN or
-       (typeid(mesher) == typeid(chi_mesh::VolumeMesherExtruder)))
+       typeid(mesher) == typeid(chi_mesh::VolumeMesherExtruder) or
+       options.geometry_type == GeometryType::ONED_SPHERICAL)
   {
     switch (groupset.angleagg_method)
     {
@@ -40,7 +41,7 @@ void LinearBoltzmann::Solver::InitFluxDataStructures(LBSGroupset& groupset)
                                " Invalid angle aggregation type.");
     }//switch on method
   }//if aggregatable
-  else if (options.geometry_type == GeometryType::ONED_SPHERICAL ||
+  else if (options.geometry_type == GeometryType::ONED_CYLINDRICAL ||
            options.geometry_type == GeometryType::TWOD_CYLINDRICAL)
   {
     switch (groupset.angleagg_method)
