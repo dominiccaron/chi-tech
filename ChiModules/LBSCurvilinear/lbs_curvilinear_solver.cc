@@ -51,11 +51,11 @@ LBSCurvilinear::Solver::PerformInputChecks()
     {
       switch (coord_system_type)
       {
-      //case chi_math::CoordinateSystemType::CYLINDRICAL:
-      //{
-      //  options.geometry_type = LinearBoltzmann::GeometryType::ONED_CYLINDRICAL;
-      //  break;
-      //}
+        case chi_math::CoordinateSystemType::CYLINDRICAL:
+        {
+          options.geometry_type = LinearBoltzmann::GeometryType::ONED_CYLINDRICAL;
+          break;
+        }
         case chi_math::CoordinateSystemType::SPHERICAL:
         {
           options.geometry_type = LinearBoltzmann::GeometryType::ONED_SPHERICAL;
