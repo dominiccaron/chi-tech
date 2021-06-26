@@ -49,6 +49,8 @@ endif()
 message(STATUS "VTK_DIR set to ${VTK_DIR}")
 
 find_package(MPI)
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${MPI_CXX_LINK_FLAGS}")
+
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CHI_TECH_DIR}/ChiResources/Macros")
 
 #================================================ Include macros
@@ -71,7 +73,7 @@ include_directories("${CHI_TECH_DIR}/ChiResources")
 include_directories("${CHI_TECH_DIR}/ChiModules")
 include_directories("${CHI_TECH_DIR}/ChiTech/ChiMath/SpatialDiscretization")
 
-include_directories(SYSTEM ${MPI_INCLUDE_PATH})
+include_directories(SYSTEM ${MPI_CXX_INCLUDE_PATH})
 
 #================================================ Library directories
 link_directories("${LUA_ROOT}/lib")
