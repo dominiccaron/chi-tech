@@ -41,7 +41,7 @@ message(STATUS "VTK_DIR set to ${VTK_DIR}")
 
 #================================================ Set project targets
 SET(TARGET ChiTech)
-project(${TARGET} C CXX)
+project(${TARGET} CXX)
 
 #================================================ Set variables
 set(CHI_TECH_DIR "${PROJECT_SOURCE_DIR}")
